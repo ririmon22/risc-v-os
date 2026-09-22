@@ -9,4 +9,7 @@ kernel.o: kernel.cpp
 
 .PHONY: run
 run: kernel.elf
-	qemu-system-riscv64 -machine virt -bios none -smp 1 -m 128M -nographic -kernel kernel.elf
+	qemu-system-riscv64 -machine virt -bios none -smp 1 -m 128M -nographic -kernel kernel.elf \
+	-global virtio-mmio.force-legacy=false \
+	-netdev user,id=net0 \
+	-device virtio-net-device,netdev=net0

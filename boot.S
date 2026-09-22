@@ -4,6 +4,18 @@
 
 # Set the stack pointer to the top of the stack.
 _start:
+    # Clear Bss.
+    la t0, __bss_start
+    la t1, __bss_end
+
+clear_bss:
+    bgeu t0, t1, clear_bss_done
+    sb zero, 0(t0)
+    addi t0, t0, 1
+    j clear_bss
+
+clear_bss_done:
+    # Set the stack pointer.
     la sp, stack_top
 
     # Set the trap entry.
